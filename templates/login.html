@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请登录</title>
+    <style type="text/css">
+        div {
+            width: 641px;
+            height: 100%;
+            min-height: 293px;
+            margin: 0 auto 0 auto;
+            text-align: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+<div>
+<h3>请登录</h3>
+<form action="/app2/userHome/" method="post">
+    {% csrf_token %}
+    {{ error }}<br>
+    用户：<input type="text" name="username" value="{{ username }}" autocomplete="off"><br>
+    密码：<input type="password" name="password" value="123" autocomplete="off"><br>
+    <input type="submit" value="登录">
+
+</form>
+</div>
+</body>
+</html>

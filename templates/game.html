@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对局页面</title>
+</head>
+<body>
+阿萨德<br>
+
+{% if request.session.username %}
+hello {{ request.session.username }}
+{% else %}
+    <a href="{{ window.location.host }}">请先登录</a>
+{% endif %}
+
+</body>
+<script type="text/javascript" src="/static/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+</script>
+</html>

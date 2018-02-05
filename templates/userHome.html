@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户主页</title>
+    <style type="text/css">
+        #online_users {
+            border: 1px;
+            background-color: #ff828a;
+            margin:10px 20%;
+            width:400px;
+        }
+        #cover {
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height:100%;
+            position: fixed;
+            background-color: #626ffa;
+            opacity: 0.5;
+            z-index:999;
+        }
+        #popup{
+            border: solid 2px #0c0d1e;
+            background-color: #ffed59;
+            padding:5%;
+            top:20%;
+            left:40%;
+            z-index: 9999;
+            position: fixed;
+        }
+        .invite{
+            cursor: pointer;
+            color: #337fff;
+        }
+    </style>
+</head>
+<body>
+hello,{{ username }} <br>
+{{ request.session.username }}<br>
+{{ userInfo }}<br>
+<div id="online_users">
+    在线用户
+    <ul id="ul_list">
+        {% for i in online_user_list %}
+        <li> {{ i }} <a class="invite">邀请</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="error"></div>
+<div id="cover">我是cover</div>
+<div id="popup">
+    <h3>收到来自用户<span id="invitationfrom_span">user?</span>的邀请</h3>
+    <p>是否接受</p>
+    <input type="button" value="是" id="acceptInvitation">
+    <input type="button" value="否，我不想搭理他" id="rejectInvitation">
+    <input type="button" value="emmmm....假装我不在" id="ignoreInvitation">
+</div>
+
+</body>
+<script type="text/javascript" src="/static/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#cover").hide();
+        $("#popup").hide();
+        $("#acceptInvitation").click(acceptInvitation);
+        $("#rejectInvitation").click(rejectInvitation);
+        $("#ignoreInvitation").click(ignoreInvitation);
+        $(".invite").click(inviteUser);
+    });
+    setInterval(function () {getUserList();},1000);
+    setInterval(function () {checkInvitation();},60000);
+    function checkInvitation() {
+        var host=window.location.host;
+        var url_for_ajax = 'http://'+host+'/checkInvitation/';
+        $.get(url_for_ajax,function(data,status){
+            var user_inviting_me=data['invitation_from'];
+            $('#invitationfrom_span').html(user_inviting_me);
+            $("#cover").show();
+            $("#popup").show();
+        });
+    }
+    function getUserList() {
+        var host=window.location.host;
+        var url_for_ajax = 'http://'+host+'/onlineUserList/';
+        $.get(url_for_ajax,function(data,status){
+            userlist=data['userlist'];
+            var htmlstring=""
+            for (var i=0;i<userlist.length;i++){
+                htmlstring+="<li>"+userlist[i]+"<a href=\"/game/?from={{ username }}&to="+ userlist[i]+"\">邀请</a></li>";
+            }
+            $('#ul_list').html(htmlstring);
+        });
+    }
+    function acceptInvitation() {
+        window.open("http://"+window.location.host+"/game/");
+    }
+    function rejectInvitation() {
+        showOrHidePopup();
+    }
+    function ignoreInvitation() {
+        showOrHidePopup();
+    }
+    function showOrHidePopup() {
+        $("#cover").toggle();
+        $("#popup").toggle();
+    }
+    function inviteUser() {
+
+
+    }
+</script>
+</html>

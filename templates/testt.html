@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>div+css实现弹出层</title>
+<style type="text/css">
+    #popup {
+        top: 40%;
+        left:10%;
+        position: fixed;
+        width: 40%;
+        z-index: 9999;
+        border:solid 1px #fa35a3;
+        display: block;
+        background-color: #ffed59;
+        margin:0 20%;
+    }
+    #cover {
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #626ffa;
+        opacity:0.5;
+    }
+</style>
+</head>
+<body>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<p>z这里是正常内容</p>
+<input type="button" value="弹个窗" id="popup_button">
+<div id="popup">
+sdfasd
+</div>
+<div id="cover">cover</div>
+
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#cover').hide();
+        $('#popup').hide();
+        $('#popup_button').click(function () {
+            $('#cover').show();
+            $('#popup').show();
+        })
+    })
+</script>
+</html>
